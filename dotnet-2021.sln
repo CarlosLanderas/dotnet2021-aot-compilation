@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31320.298
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapi", "webapi\webapi.csproj", "{500721BC-532D-45CA-9E46-26FE9D91A827}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dockerfile", "Dockerfile", "{89873F8C-DB92-48AD-B7EF-00AEDCC2DA47}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile-Ubuntu-AOT = Dockerfile-Ubuntu-AOT
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interop", "Interop", "{BF04C386-1FAD-49AE-BABB-8A703BBC9508}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-consumer", "interop\csharp-to-rust\dotnet-consumer\dotnet-consumer.csproj", "{C4639645-A99E-42AA-B4B7-93807E4E51BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-lib", "interop\rust-to-csharp\dotnet-lib\dotnet-lib.csproj", "{2CDE4369-DAC5-4A57-96A2-CF681E6A55B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{500721BC-532D-45CA-9E46-26FE9D91A827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{500721BC-532D-45CA-9E46-26FE9D91A827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{500721BC-532D-45CA-9E46-26FE9D91A827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{500721BC-532D-45CA-9E46-26FE9D91A827}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4639645-A99E-42AA-B4B7-93807E4E51BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4639645-A99E-42AA-B4B7-93807E4E51BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4639645-A99E-42AA-B4B7-93807E4E51BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4639645-A99E-42AA-B4B7-93807E4E51BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CDE4369-DAC5-4A57-96A2-CF681E6A55B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CDE4369-DAC5-4A57-96A2-CF681E6A55B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CDE4369-DAC5-4A57-96A2-CF681E6A55B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CDE4369-DAC5-4A57-96A2-CF681E6A55B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C4639645-A99E-42AA-B4B7-93807E4E51BD} = {BF04C386-1FAD-49AE-BABB-8A703BBC9508}
+		{2CDE4369-DAC5-4A57-96A2-CF681E6A55B8} = {BF04C386-1FAD-49AE-BABB-8A703BBC9508}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9DE127D7-FB04-4EEF-8C4F-5D547389E9B5}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+FROM ubuntu:20.04
+
+RUN apt-get update
+RUN apt-get install clang \
+	curl \
+	zlib1g-dev \
+	libicu-dev \
+	libkrb5-dev -y
