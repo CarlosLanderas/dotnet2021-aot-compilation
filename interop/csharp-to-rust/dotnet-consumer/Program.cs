@@ -6,15 +6,20 @@ namespace dotnet_consumer
 {
     class Program
     {
+#if WINDOWS
+    const string NativeLib = "rust_lib.dll";
+#else
+     const string NativeLib = "librust_lib.so";
+#endif
 
-        [DllImport("rust_lib.dll")]
+        [DllImport(NativeLib)]
         public static extern User get_request(Int32 userId);
-        [DllImport("rust_lib.dll")]
+        [DllImport(NativeLib)]
         public static extern Int32 divide(Int32 num1, Int32 num2);
 
-        [DllImport("rust_lib.dll")]
+        [DllImport(NativeLib)]
         public static extern Int32 fib(Int32 num1);
-        [DllImport("rust_lib.dll")]
+        [DllImport(NativeLib)]
         public static extern void free_alloc();
 
         static void Main(string[] args)
@@ -41,8 +46,8 @@ namespace dotnet_consumer
                 fib(i);
             }
 
-
-            Console.WriteLine($"Elapsed: {st.Elapsed.TotalMilliseconds}");
+            var time = Process.GetCurrentProcess().StartTime;
+            Console.WriteLine($"Elapsed: {(DateTime.Now - time).TotalMilliseconds}");
 
         }
     }

@@ -11,15 +11,18 @@ namespace dotnet_lib
 
         static int fib_int(int n) {
             if (n == 0 || n == 1) return n;
+
             return fib_int(n - 1) + fib_int(n - 2);
         }
 
         [UnmanagedCallersOnly(EntryPoint = "famousphrase" )]
         public static IntPtr famousphrase(IntPtr name) {
+
             var who = Marshal.PtrToStringAnsi(name);
             
             var phrase = FamousPhrases[rnd.Next(0, FamousPhrases.Count - 1)];
             var msg = $"Hello {who}, {phrase}";
+
             return Marshal.StringToHGlobalAnsi(msg);
         }
 

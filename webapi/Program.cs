@@ -42,6 +42,5 @@ Host.CreateDefaultBuilder()
 
 class UserService
 {
-    public string Salute(string userName) => $"Hello {userName}";
-    
+    public string Salute(string userName) => $"Hello {userName}";    
 }

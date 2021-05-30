@@ -7,12 +7,25 @@
     <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IsWindows>true</IsWindows>
+  </PropertyGroup>
+
+  <PropertyGroup  Condition="'$(OS)' == 'Windows_NT'">
+    <DefineConstants>WINDOWS</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="rust_lib.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="librust_lib.so" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Dotnet.ILCompiler" Version="6.0.0-preview.6.21278.2" />
     <PackageReference Include="runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="6.0.0-preview.6.21278.2" />
   </ItemGroup>
+
+  <Target Name="Messages"  BeforeTargets="BeforeBuild">
+    <Message Text="Compiling for $(OS)" Importance="high"/>
+  </Target>
 </Project>
