@@ -17,10 +17,10 @@ Host.CreateDefaultBuilder()
         .ConfigureServices(services => services.AddSingleton<UserService>())
         .Configure(app =>
         {
-            var hostLifetime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
-            hostLifetime.ApplicationStarted.Register(() =>
+            var hostlifeTime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
+            hostlifeTime.ApplicationStarted.Register(() =>
             {
-                Console.WriteLine($"Application started in {st.Elapsed.TotalMilliseconds}");
+                Console.WriteLine($"Elapsed time: {st.Elapsed.TotalMilliseconds}");
             });
 
             app
@@ -29,9 +29,9 @@ Host.CreateDefaultBuilder()
             {
                 config.MapGet("/hello", async context =>
                 {
-                    var svc = context.RequestServices.GetService<UserService>();
-                    var user = context.Request.Query["user"].FirstOrDefault();
-                    await context.Response.WriteAsync(svc.Salute(user));
+                    var svc = context.RequestServices.GetRequiredService<UserService>();
+                    var userName = context.Request.Query["name"].FirstOrDefault();
+                    await context.Response.WriteAsync(svc.Salute(userName));
                 });
             });
         });
@@ -39,8 +39,10 @@ Host.CreateDefaultBuilder()
     .Build()
     .Run();
 
-
 class UserService
 {
-    public string Salute(string userName) => $"Hello {userName}";    
+    public string Salute(string user)
+    {
+        return $"Hello mr/mrs {user}";
+    }
 }
