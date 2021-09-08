@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Private.Reflection.Execution</name>
+    </assembly>
+    <members>
+        <member name="M:Internal.Reflection.Execution.ReflectionExecution.Initialize">
+            <summary>
+            Eager initialization of runtime reflection support. As part of ExecutionEnvironmentImplementation
+            initialization it enumerates the modules and registers the ones containing EmbeddedMetadata reflection blobs
+            in its _moduleToMetadataReader map.
+            </summary>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.TryGetMetadataForNamedType(System.RuntimeTypeHandle,System.Reflection.Runtime.General.QTypeDefinition@)">
+             <summary>
+             Return the metadata handle for a TypeDef if the pay-for-policy enabled this type as browsable. This is used to obtain name and other information for types
+             obtained via typeof() or Object.GetType(). This can include generic types (not to be confused with generic instances).
+            
+             Preconditions:
+                runtimeTypeHandle is a typedef (not a constructed type such as an array or generic instance.)
+             </summary>
+             <param name="runtimeTypeHandle">Runtime handle of the type in question</param>
+             <param name="qTypeDefinition">TypeDef handle for the type</param>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.TryGetNamedTypeForMetadata(System.Reflection.Runtime.General.QTypeDefinition,System.RuntimeTypeHandle@)">
+             <summary>
+             Return the RuntimeTypeHandle for the named type described in metadata. This is used to implement the Create and Invoke
+             apis for types.
+            
+             Preconditions:
+                metadataReader + typeDefHandle  - a valid metadata reader + typeDefinitionHandle where "metadataReader" is one
+                                                  of the metadata readers returned by ExecutionEnvironment.MetadataReaders.
+            
+             Note: Although this method has a "bool" return value like the other mapping table accessors, the Project N pay-for-play design
+             guarantees that any type enabled for metadata also has a RuntimeTypeHandle underneath.
+             </summary>
+             <param name="qTypeDefinition">TypeDef handle for the type to look up</param>
+             <param name="runtimeTypeHandle">Runtime type handle (EEType) for the given type</param>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.TryGetTypeReferenceForNamedType(System.RuntimeTypeHandle,Internal.Metadata.NativeFormat.MetadataReader@,Internal.Metadata.NativeFormat.TypeReferenceHandle@)">
+             <summary>
+             Return the metadata handle for a TypeRef if this type was referenced indirectly by other type that pay-for-play has denoted as browsable
+             (for example, as part of a method signature.)
+            
+             This is only used in "debug" builds to provide better MissingMetadataException diagnostics.
+            
+             Preconditions:
+                runtimeTypeHandle is a typedef (not a constructed type such as an array or generic instance.)
+             </summary>
+             <param name="runtimeTypeHandle">EEType of the type in question</param>
+             <param name="metadataReader">Metadata reader for the type</param>
+             <param name="typeRefHandle">Located TypeRef handle</param>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.TryGetNamedTypeForTypeReference(Internal.Metadata.NativeFormat.MetadataReader,Internal.Metadata.NativeFormat.TypeReferenceHandle,System.RuntimeTypeHandle@)">
+             <summary>
+             Return the RuntimeTypeHandle for the named type referenced by another type that pay-for-play denotes as browsable (for example,
+             in a member signature.) Typically, the type itself is *not* browsable (or it would have appeared in the TypeDef table.)
+            
+             This is used to ensure that we can produce a Type object if requested and that it match up with the analogous
+             Type obtained via typeof().
+            
+            
+             Preconditions:
+                metadataReader + typeRefHandle  - a valid metadata reader + typeReferenceHandle where "metadataReader" is one
+                                                  of the metadata readers returned by ExecutionEnvironment.MetadataReaders.
+            
+             Note: Although this method has a "bool" return value like the other mapping table accessors, the Project N pay-for-play design
+             guarantees that any type that has a metadata TypeReference to it also has a RuntimeTypeHandle underneath.
+             </summary>
+             <param name="metadataReader">Metadata reader for module containing the type reference</param>
+             <param name="typeRefHandle">TypeRef handle to look up</param>
+             <param name="runtimeTypeHandle">Resolved EEType for the type reference</param>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.TryGetMethodInvokeInfo(System.RuntimeTypeHandle,System.Reflection.Runtime.General.QMethodDefinition,System.RuntimeTypeHandle[],System.Reflection.MethodBase,Internal.Runtime.TypeLoader.MethodSignatureComparer@,Internal.TypeSystem.CanonicalFormKind)">
+            <summary>
+            Try to look up method invoke info in metadata for all registered modules, construct
+            the calling convention converter as appropriate and fill in MethodInvokeInfo.
+            </summary>
+            <param name="declaringTypeHandle">Runtime handle of declaring type for the method</param>
+            <param name="methodHandle">Handle of method to look up</param>
+            <param name="genericMethodTypeArgumentHandles">Runtime handles of generic method arguments</param>
+            <param name="methodInfo">MethodInfo of method to look up</param>
+            <param name="methodSignatureComparer">Helper structure used for comparing signatures</param>
+            <param name="canonFormKind">Requested canon form</param>
+            <returns>Constructed method invoke info, null on failure</returns>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.GetLdFtnReverseLookups_Helper(System.Collections.Generic.KeyValuePair{Internal.Runtime.TypeLoader.NativeFormatModuleInfo,Internal.Reflection.Execution.ExecutionEnvironmentImplementation.FunctionPointersToOffsets}[]@,System.Func{Internal.Runtime.TypeLoader.NativeFormatModuleInfo,Internal.Reflection.Execution.ExecutionEnvironmentImplementation.FunctionPointersToOffsets})">
+            <summary>
+            Initialize a lookup array of module to function pointer/parser offset pair arrays. Do so in a manner that will allow
+            future work which will invalidate the cache (by setting it to null)
+            </summary>
+            <param name="ldftnReverseLookupStatic">pointer to static which holds cache value. This is treated as a volatile variable</param>
+            <param name="lookupComputer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.TryGetStaticClassConstructionContext(System.RuntimeTypeHandle)">
+            <summary>
+            Locate the static constructor context given the runtime type handle (EEType) for the type in question.
+            </summary>
+            <param name="typeHandle">EEType of the type to look up</param>
+        </member>
+        <member name="T:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.RemoteStaticFieldDescriptor">
+            <summary>
+            This structure describes one static field in an external module. It is represented
+            by an indirection cell pointer and an offset within the cell - the final address
+            of the static field is essentially *IndirectionCell + Offset.
+            </summary>
+        </member>
+        <member name="F:Internal.Reflection.Execution.ExecutionEnvironmentImplementation.s_extractedResourceDictionary">
+             <summary>
+             This dictionary gets us from assembly + resource name to the offset of a resource
+             inside the resource data blob
+            
+             The dictionary's key is a Fusion-style assembly name.
+             The dictionary's value is a list of (resourcename,index) tuples.
+             </summary>
+        </member>
+        <member name="M:Internal.Reflection.Execution.ReflectionExecutionDomainCallbacksImplementation.TryGetDefaultParameterValue(System.Object,System.RuntimeTypeHandle,System.Int32,System.Object@)">
+            <summary>
+            Retrieves the default value for a parameter of a method.
+            </summary>
+            <param name="defaultParametersContext">The default parameters context used to invoke the method,
+            this should identify the method in question. This is passed to the RuntimeAugments.CallDynamicInvokeMethod.</param>
+            <param name="thType">The type of the parameter to retrieve.</param>
+            <param name="argIndex">The index of the parameter on the method to retrieve.</param>
+            <param name="defaultValue">The default value of the parameter if available.</param>
+            <returns>true if the default parameter value is available, otherwise false.</returns>
+        </member>
+        <member name="P:System.NotImplemented.ByDesign">
+            <summary>
+            Permanent NotImplementedException with no message shown to user.
+            </summary>
+        </member>
+        <member name="M:System.NotImplemented.ByDesignWithMessage(System.String)">
+            <summary>
+            Permanent NotImplementedException with localized message shown to user.
+            </summary>
+        </member>
+        <member name="P:System.SR.Reflection_InsufficientMetadata_NoHelpAvailable">
+            <summary>This operation cannot be carried out because metadata for the following object was removed for performance reasons:\n\n  {0}\n\nNo further information is available. Rebuild in debug mode for better information.\n\n</summary>
+        </member>
+        <member name="P:System.SR.Reflection_InsufficientMetadata_EdbNeeded">
+            <summary>'{0}' is missing metadata. For more information, please visit http://go.microsoft.com/fwlink/?LinkID=392859</summary>
+        </member>
+        <member name="P:System.SR.Arg_DlgtTargMeth">
+            <summary>Cannot bind to the target method because its signature is not compatible with that of the delegate type.</summary>
+        </member>
+        <member name="P:System.SR.Arg_EmptyArray">
+            <summary>Array may not be empty.</summary>
+        </member>
+        <member name="P:System.SR.MissingMember">
+            <summary>Member not found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_AmbiguousMatchException">
+            <summary>Ambiguous match found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_HTCapacityOverflow">
+            <summary>Hashtable's capacity overflowed and went negative. Check load factor, capacity and the current size of the table.</summary>
+        </member>
+        <member name="P:System.SR.InvalidOperation_NoValue">
+            <summary>Nullable object must have a value.</summary>
+        </member>
+        <member name="P:System.SR.RFLCT_Targ_StatFldReqTarg">
+            <summary>Non-static field requires a target.</summary>
+        </member>
+        <member name="P:System.SR.MissingConstructor_Name">
+            <summary>Constructor on type '{0}' not found.</summary>
+        </member>
+        <member name="P:System.SR.MultiDim_Of_This_Rank_Not_Supported">
+            <summary>Multidimensional arrays of rank {0} are not supported.</summary>
+        </member>
+        <member name="P:System.SR.Object_NotInvokable">
+            <summary>This object cannot be invoked because no code was generated for it: '{0}'.</summary>
+        </member>
+        <member name="P:System.SR.MakeGenericMethod_NoMetadata">
+            <summary>MakeGenericMethod() cannot create this generic method instantiation because no code was generated for it: '{0}'.</summary>
+        </member>
+        <member name="P:System.SR.PlatformNotSupported_CannotInvokeDelegateCtor">
+            <summary>Dynamic invocation of delegate constructors is not supported on this runtime.</summary>
+        </member>
+        <member name="P:System.SR.Argument_AddingDuplicate">
+            <summary>An item with the same key has already been added.</summary>
+        </member>
+        <member name="P:System.SR.Argument_GenericArgsCount">
+            <summary>The number of generic arguments provided doesn't equal the arity of the generic type definition.</summary>
+        </member>
+        <member name="P:System.SR.Argument_NeverValidGenericArgument">
+            <summary>The type '{0}' may not be used as a type argument.</summary>
+        </member>
+        <member name="P:System.SR.Argument_ConstraintFailed">
+            <summary>'{0}', on '{1}' violates the constraint of type '{2}'.</summary>
+        </member>
+        <member name="P:System.SR.Argument_ImplementIComparable">
+            <summary>At least one object must implement IComparable.</summary>
+        </member>
+        <member name="P:System.SR.InvalidOperation_AsyncIOInProgress">
+            <summary>The stream is currently in use by a previous operation on the stream.</summary>
+        </member>
+        <member name="P:System.SR.Argument_StreamNotReadable">
+            <summary>Stream was not readable.</summary>
+        </member>
+        <member name="P:System.SR.ObjectDisposed_ReaderClosed">
+            <summary>Cannot read from a closed TextReader.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_NeedPosNum">
+            <summary>Positive number required.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentNull_Buffer">
+            <summary>Buffer cannot be null.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentOutOfRange_NeedNonNegNum">
+            <summary>Non-negative number required.</summary>
+        </member>
+        <member name="P:System.SR.Argument_InvalidOffLen">
+            <summary>Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.</summary>
+        </member>
+        <member name="P:System.SR.Acc_ReadOnly">
+            <summary>Cannot set a constant field.</summary>
+        </member>
+        <member name="P:System.SR.DelegateGetMethodInfo_NoDynamic">
+            <summary>Cannot retrieve a MethodInfo for this delegate because the method it targeted was not enabled for metadata.</summary>
+        </member>
+        <member name="P:System.SR.DelegateGetMethodInfo_NoDynamic_WithDisplayString">
+            <summary>Cannot retrieve a MethodInfo for this delegate because the method it targeted ({0}) was not enabled for metadata.</summary>
+        </member>
+        <member name="P:System.SR.DelegateGetMethodInfo_NoInstantiation">
+            <summary>Cannot retrieve a MethodInfo for this delegate because the necessary generic instantiation was not metadata-enabled.</summary>
+        </member>
+        <member name="P:System.SR.DelegateGetMethodInfo_ObjectArrayDelegate">
+            <summary>Cannot retrieve a MethodInfo for this delegate because the delegate target is an interpreted LINQ expression.</summary>
+        </member>
+        <member name="P:System.SR.Argument_InterfaceMap">
+            <summary>'this' type cannot be an interface itself.</summary>
+        </member>
+        <member name="P:System.SR.Arg_MustBeInterface">
+            <summary>Type passed must be an interface.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NotFoundIFace">
+            <summary>Interface not found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_InterfaceMapMustNotBeAbstract">
+            <summary>Could not retrieve the mapping of the interface '{0}' on type '{1}' because the type implements the interface abstractly.</summary>
+        </member>
+        <member name="P:System.SR.Acc_InitOnlyStatic">
+            <summary>Cannot set initonly static field after its owning type is initialized.</summary>
+        </member>
+        <member name="M:System.Collections.Generic.LowLevelListWithIList`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
+            <internalonly/>
+        </member>
+        <member name="T:System.Collections.Generic.LowLevelDictionaryWithIEnumerable`2">
+            <summary>
+            LowLevelDictionary when enumeration is needed
+            </summary>
+        </member>
+        <member name="M:System.Collections.HashHelpers.GetFastModMultiplier(System.UInt32)">
+            <summary>Returns approximate reciprocal of the divisor: ceil(2**64 / divisor).</summary>
+            <remarks>This should only be used on 64-bit.</remarks>
+        </member>
+        <member name="M:System.Collections.HashHelpers.FastMod(System.UInt32,System.UInt32,System.UInt64)">
+            <summary>Performs a mod operation using the multiplier pre-computed with <see cref="M:System.Collections.HashHelpers.GetFastModMultiplier(System.UInt32)"/>.</summary>
+            <remarks>This should only be used on 64-bit.</remarks>
+        </member>
+    </members>
+</doc>

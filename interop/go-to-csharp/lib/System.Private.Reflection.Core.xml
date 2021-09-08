@@ -1,0 +1,519 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Private.Reflection.Core</name>
+    </assembly>
+    <members>
+        <member name="P:System.Reflection.Runtime.Assemblies.RuntimeAssembly.TypeForwardInfos">
+            <summary>
+            Intentionally excludes forwards to nested types.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetTypeCore(System.String,System.Boolean)">
+             <summary>
+             Helper routine for the more general Type.GetType() family of apis.
+            
+             Resolves top-level named types only. No nested types. No constructed types.
+            
+             Returns null if the type does not exist. Throws for all other error cases.
+             </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.RunModuleConstructor">
+            <summary>
+            Ensures a module is loaded and that its module constructor is executed. If the module is fully
+            loaded and its constructor already ran, we do not run it again.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.UncachedGetTypeCoreCaseSensitive(System.String)">
+            <summary>
+            Perform a lookup for a type based on a name. Overriders are expected to
+            have a non-cached implementation, as the result is expected to be cached by
+            callers of this method. Should be implemented by every format specific
+            RuntimeAssembly implementor
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetTypeCoreCaseInsensitive(System.String)">
+            <summary>
+            Perform a lookup for a type based on a name. Overriders may or may not
+            have a cached implementation, as the result is not expected to be cached by
+            callers of this method, but it is also a rarely used api. Should be
+            implemented by every format specific RuntimeAssembly implementor
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetLoadedAssemblies">
+            <summary>
+            Returns a *freshly allocated* array of loaded Assemblies.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetRuntimeAssembly(System.Reflection.RuntimeAssemblyName)">
+            <summary>
+            Returns non-null or throws.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetRuntimeAssemblyFromByteArray(System.Byte[],System.Byte[])">
+            <summary>
+            Returns non-null or throws.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetRuntimeAssemblyFromPath(System.String)">
+            <summary>
+            Returns non-null or throws.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.Assemblies.RuntimeAssembly.GetRuntimeAssemblyIfExists(System.Reflection.RuntimeAssemblyName)">
+            <summary>
+            Returns null if no assembly matches the assemblyRefName. Throws for other error cases.
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.BindingFlagSupport.QueriedMemberList`1.TotalCount">
+            <summary>
+            Returns the # of candidates for a non-DeclaredOnly search. Caution: Can throw MissingMetadataException. Use DeclaredOnlyCount if you don't want to search base classes.
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.BindingFlagSupport.QueriedMemberList`1.DeclaredOnlyCount">
+            <summary>
+            Returns the # of candidates for a DeclaredOnly search
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.BindingFlagSupport.QueryResult`1.Count">
+            <summary>
+            Returns the number of matching results.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.BindingFlagSupport.QueryResult`1.ToArray">
+            <summary>
+            Copies the results to a freshly allocated array. Use this at api boundary points.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.BindingFlagSupport.QueryResult`1.CopyTo(System.Reflection.MemberInfo[],System.Int32)">
+            <summary>
+            Copies the results into an existing array.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.BindingFlagSupport.QueryResult`1.Disambiguate">
+            <summary>
+            Returns a single member, null or throws AmbigousMatchException, for the Type.Get*(string name,...) family of apis.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.EventInfos.RuntimeEventInfo.GetEventMethod(System.Reflection.Runtime.EventInfos.RuntimeEventInfo.EventMethodSemantics)">
+            <summary>
+            Override to return the Method that corresponds to the specified semantic.
+            Return null if no method is to be found.
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.EventInfos.RuntimeEventInfo.MetadataName">
+            <summary>
+            Override to provide the metadata based name of an event. (Different from the Name
+            property in that it does not go into the reflection trace logic.)
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.EventInfos.RuntimeEventInfo.DefiningTypeInfo">
+            <summary>
+            Return the DefiningTypeInfo as a RuntimeTypeInfo (instead of as a format specific type info)
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.FieldInfos.RuntimeFieldInfo.MetadataName">
+            <summary>
+            Override to provide the metadata based name of a field. (Different from the Name
+            property in that it does not go into the reflection trace logic.)
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.FieldInfos.RuntimeFieldInfo.GetDefaultValueIfAvailable(System.Boolean,System.Object@)">
+            <summary>
+            Get the default value if exists for a field by parsing metadata. Return false if there is no default value.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.FieldInfos.RuntimeFieldInfo.TryGetFieldAccessor">
+            <summary>
+            Return a FieldAccessor object for accessing the value of a non-literal field. May rely on metadata to create correct accessor.
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.FieldInfos.RuntimeFieldInfo.FieldRuntimeType">
+            <summary>
+            Return the type of the field by parsing metadata.
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.FieldInfos.RuntimeFieldInfo.DefiningType">
+            <summary>
+            Return the DefiningTypeInfo as a RuntimeTypeInfo (instead of as a format specific type info)
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.FieldInfos.RuntimeFieldInfo.Offset">
+            <summary>
+            Returns the field offset (asserts and throws if not an instance field). Does not include the size of the object header.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.General.NativeFormatMetadataReaderExtensions.ReverseStringInStringBuilder(System.Text.StringBuilder,System.Int32,System.Int32)">
+            <summary>
+            Reverse len characters in a StringBuilder starting at offset index
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.PropertyInfos.RuntimePropertyInfo.PropertyTypeHandle">
+            <summary>
+            Return a qualified handle that can be used to get the type of the property.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.PropertyInfos.RuntimePropertyInfo.GetPropertyMethod(System.Reflection.Runtime.PropertyInfos.RuntimePropertyInfo.PropertyMethodSemantics)">
+            <summary>
+            Override to return the Method that corresponds to the specified semantic.
+            Return null if a method of the appropriate semantic does not exist
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.PropertyInfos.RuntimePropertyInfo.MetadataName">
+            <summary>
+            Override to provide the metadata based name of a property. (Different from the Name
+            property in that it does not go into the reflection trace logic.)
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.PropertyInfos.RuntimePropertyInfo.DefiningTypeInfo">
+            <summary>
+            Return the DefiningTypeInfo as a RuntimeTypeInfo (instead of as a format specific type info)
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.MethodInfos.RuntimeMethodInfo.CreateDelegateNoThrowOnBindFailure(System.Reflection.Runtime.TypeInfos.RuntimeTypeInfo,System.Object,System.Boolean)">
+            <summary>
+            Common CreateDelegate worker. NOTE: If the method signature is not compatible, this method returns null rather than throwing an ArgumentException.
+            This is needed to support the api overloads that have a "throwOnBindFailure" parameter.
+            </summary>
+        </member>
+        <member name="T:System.Reflection.Runtime.MethodInfos.IRuntimeMethodCommon`1">
+            <summary>
+            These api's are to be implemented by parsing metadata.
+            </summary>
+            <typeparam name="TRuntimeMethodCommon"></typeparam>
+        </member>
+        <member name="P:System.Reflection.Runtime.MethodInfos.IRuntimeMethodCommon`1.QualifiedMethodSignature">
+            <summary>
+            Return an array of the types of the return value and parameter types.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.MethodInfos.IRuntimeMethodCommon`1.FillInMetadataDescribedParameters(System.Reflection.Runtime.MethodInfos.VirtualRuntimeParameterInfoArray@,System.Reflection.Runtime.General.QSignatureTypeHandle[],System.Reflection.MethodBase,System.Reflection.Runtime.General.TypeContext)">
+            <summary>
+            Parse the metadata that describes parameters, and for each parameter for which there is specific metadata
+            construct a RuntimeParameterInfo and fill in the VirtualRuntimeParamterInfoArray. Do remember to use contextMethod
+            instead of using the one internal to the RuntimeMethodCommon, as the runtime may pass in a subtly different context.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.MethodInfos.IRuntimeMethodCommon`1.GetRuntimeMethodHandle(System.Type[])">
+            <summary>
+            Retrieves the RuntimeMethodHandle for the given method. Non-null generic args should only be passed for instantiated
+            generic methods.
+            </summary>
+        </member>
+        <member name="M:System.Reflection.Runtime.TypeInfos.RuntimeNamedTypeInfo.ComputeGuidFromCustomAttributes">
+            <summary>
+            Override this function to read the Guid attribute from a type's metadata. If the attribute
+            is not present, or isn't parseable, return null. Should be overriden by metadata specific logic
+            </summary>
+        </member>
+        <member name="P:System.Reflection.Runtime.TypeInfos.RuntimeNamedTypeInfo.TypeDefinitionQHandle">
+            <summary>
+            QTypeDefRefOrSpec handle that can be used to re-acquire this type. Must be implemented
+            for all metadata sourced type implementations.
+            </summary>
+        </member>
+        <member name="T:System.Reflection.Runtime.TypeParsing.CoreAssemblyResolver">
+            <summary>
+            Return the assembly matching the refName if one exists. If a matching assembly doesn't exist, return null. Throw for all other errors.
+            </summary>
+        </member>
+        <member name="T:System.Reflection.Runtime.TypeParsing.CoreTypeResolver">
+             <summary>
+             Look for a type matching the name inside the provided assembly. If "containingAssemblyIfAny" is null, look in a set of default assemblies. For example, if
+             this resolver is for the Type.GetType() api, the default assemblies are the assembly that invoked Type.GetType() and mscorlib in that order.
+             If this resolver is for Assembly.GetType(), the default is that assembly. Third-party resolvers can do whatever they want. If no type exists for that name,
+             return null. Throw for all other errors. The name will be for a top-level named type only. No nested types. No constructed types.
+             </summary>
+            
+             <remarks>
+             This delegate "should" take an "ignoreCase" parameter too, but pragmatically, every resolver we create is a closure for other reasons so
+             it's more convenient to let "ignoreCase" be just another variable that's captured in that closure.
+             </remarks>
+        </member>
+        <member name="M:System.Reflection.Runtime.TypeParsing.TypeName.ResolveType(System.Reflection.Assembly,System.Reflection.Runtime.TypeParsing.GetTypeOptions)">
+            <summary>
+            Helper for the Type.GetType() family of apis. "containingAssemblyIsAny" is the assembly to search for (as determined
+            by a qualifying assembly string in the original type string passed to Type.GetType(). If null, it means the type stream
+            didn't specify an assembly name. How to respond to that is up to the type resolver delegate in getTypeOptions - this class
+            is just a middleman.
+            </summary>
+        </member>
+        <member name="P:System.NotImplemented.ByDesign">
+            <summary>
+            Permanent NotImplementedException with no message shown to user.
+            </summary>
+        </member>
+        <member name="M:System.NotImplemented.ByDesignWithMessage(System.String)">
+            <summary>
+            Permanent NotImplementedException with localized message shown to user.
+            </summary>
+        </member>
+        <member name="P:System.SR.Bif_InvalidMetadata">
+            <summary>A problem was found in this image's metadata.</summary>
+        </member>
+        <member name="P:System.SR.Acc_CreateAbstEx">
+            <summary>Cannot create an instance of {0} because it is an abstract class.</summary>
+        </member>
+        <member name="P:System.SR.Acc_NotClassInit">
+            <summary>Type initializer was not callable.</summary>
+        </member>
+        <member name="P:System.SR.Acc_ReadOnly">
+            <summary>Cannot set a constant field.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NotGenericMethodDefinition">
+            <summary>{0} is not a GenericMethodDefinition. MakeGenericMethod may only be called on a method for which MethodBase.IsGenericMethodDefinition is true.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NotGenericParameter">
+            <summary>Method may only be called on a Type for which Type.IsGenericParameter is true.</summary>
+        </member>
+        <member name="P:System.SR.Arg_TypeLoadNullStr">
+            <summary>A null or zero length string does not represent a valid Type.</summary>
+        </member>
+        <member name="P:System.SR.Argument_NotEnoughGenArguments">
+            <summary>The type or method has {1} generic parameter(s), but {0} generic argument(s) were provided. A generic argument must be provided for each generic parameter.</summary>
+        </member>
+        <member name="P:System.SR.Reflection_CustomReflectionObjectsNotSupported">
+            <summary>The object '{0}' was created by a custom ReflectionContext and cannot be used here.</summary>
+        </member>
+        <member name="P:System.SR.TypeLoad_TypeNotFound">
+            <summary>The type '{0}' cannot be found.</summary>
+        </member>
+        <member name="P:System.SR.TypeLoad_TypeNotFoundInAssembly">
+            <summary>The type '{0}' cannot be found in assembly '{1}'.</summary>
+        </member>
+        <member name="P:System.SR.FileNotFound_AssemblyNotFound">
+            <summary>Cannot load assembly '{0}'. No metadata found for this assembly.</summary>
+        </member>
+        <member name="P:System.SR.Arg_HTCapacityOverflow">
+            <summary>Hashtable's capacity overflowed and went negative. Check load factor, capacity and the current size of the table.</summary>
+        </member>
+        <member name="P:System.SR.Arg_DlgtTargMeth">
+            <summary>Cannot bind to the target method because its signature is not compatible with that of the delegate type.</summary>
+        </member>
+        <member name="P:System.SR.Arg_MustBeDelegate">
+            <summary>Type must derive from Delegate.</summary>
+        </member>
+        <member name="P:System.SR.Arg_InvokeMethodMissingMetadata">
+            <summary>Cannot create a delegate on type '{0}' as it is missing metadata for the Invoke method.</summary>
+        </member>
+        <member name="P:System.SR.Argument_AddingDuplicate">
+            <summary>An item with the same key has already been added. Key: {0}</summary>
+        </member>
+        <member name="P:System.SR.Argument_InvalidHandle">
+            <summary>The handle is invalid.</summary>
+        </member>
+        <member name="P:System.SR.Argument_ResolveMethodHandle">
+            <summary>Type handle '{0}' and method handle with declaring type '{1}' are incompatible. Get RuntimeMethodHandle and declaring RuntimeTypeHandle off the same MethodBase.</summary>
+        </member>
+        <member name="P:System.SR.Argument_ResolveFieldHandle">
+            <summary>Type handle '{0}' and field handle with declaring type '{1}' are incompatible. Get RuntimeFieldHandle and declaring RuntimeTypeHandle off the same FieldInfo.</summary>
+        </member>
+        <member name="P:System.SR.Argument_MethodDeclaringTypeGeneric">
+            <summary>Cannot resolve method {0} because the declaring type of the method handle is generic. Explicitly provide the declaring type to GetMethodFromHandle.</summary>
+        </member>
+        <member name="P:System.SR.Argument_FieldDeclaringTypeGeneric">
+            <summary>Cannot resolve field {0} because the declaring type of the field handle is generic. Explicitly provide the declaring type to GetFieldFromHandle.</summary>
+        </member>
+        <member name="P:System.SR.Arg_UnboundGenParam">
+            <summary>Late bound operations cannot be performed on types or methods for which ContainsGenericParameters is true.</summary>
+        </member>
+        <member name="P:System.SR.Argument_AssemblyGetTypeCannotSpecifyAssembly">
+            <summary>Type names passed to Assembly.GetType() must not specify an assembly.</summary>
+        </member>
+        <member name="P:System.SR.InvalidOperation_NoPublicAddMethod">
+            <summary>Cannot add the event handler since no public add method exists for the event.</summary>
+        </member>
+        <member name="P:System.SR.InvalidOperation_NoPublicRemoveMethod">
+            <summary>Cannot remove the event handler since no public remove method exists for the event.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NotGenericTypeDefinition">
+            <summary>{0} is not a GenericTypeDefinition. MakeGenericType may only be called on a type for which Type.IsGenericTypeDefinition is true.</summary>
+        </member>
+        <member name="P:System.SR.PlatformNotSupported_MakeGenericType">
+            <summary>PlatformNotSupported_MakeGenericType", @"MakeGenericType can only accept Type objects created by the runtime.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentException_InvalidTypeArgument">
+            <summary>The type '{0}' may not be used as a type argument.</summary>
+        </member>
+        <member name="P:System.SR.ArgumentException_InvalidArrayElementType">
+            <summary>The type '{0}' may not be used as an array element type.</summary>
+        </member>
+        <member name="P:System.SR.PlatformNotSupported_NoTypeHandleForOpenTypes">
+            <summary>TypeHandles are not supported for types that return true for ContainsGenericParameters.</summary>
+        </member>
+        <member name="P:System.SR.Argument_HasToBeArrayClass">
+            <summary>Must be an array type.</summary>
+        </member>
+        <member name="P:System.SR.InvalidOperation_NotGenericType">
+            <summary>This operation is only valid on generic types.</summary>
+        </member>
+        <member name="P:System.SR.Arg_GetMethNotFnd">
+            <summary>Property get method not found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_SetMethNotFnd">
+            <summary>Property set method not found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_EmptyArray">
+            <summary>Array may not be empty.</summary>
+        </member>
+        <member name="P:System.SR.MissingMember">
+            <summary>Member not found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_AmbiguousMatchException">
+            <summary>Ambiguous match found.</summary>
+        </member>
+        <member name="P:System.SR.NoMetadataTokenAvailable">
+            <summary>There is no metadata token available for the given member.</summary>
+        </member>
+        <member name="P:System.SR.MissingField">
+            <summary>Field not found.</summary>
+        </member>
+        <member name="P:System.SR.Arg_MustBeType">
+            <summary>Type must be a type provided by the runtime.</summary>
+        </member>
+        <member name="P:System.SR.NotSupported_ChangeType">
+            <summary>ChangeType operation is not supported.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NoDefCTor">
+            <summary>No parameterless constructor defined for this object.</summary>
+        </member>
+        <member name="P:System.SR.NotSupported_ActivAttr">
+            <summary>Activation Attributes are not supported.</summary>
+        </member>
+        <member name="P:System.SR.NotSupported_CallToVarArg">
+            <summary>Vararg calling convention not supported.</summary>
+        </member>
+        <member name="P:System.SR.Acc_CreateGenericEx">
+            <summary>Cannot create an instance of {0} because Type.ContainsGenericParameters is true.</summary>
+        </member>
+        <member name="P:System.SR.Acc_CreateVoid">
+            <summary>Cannot dynamically create an instance of System.Void.</summary>
+        </member>
+        <member name="P:System.SR.Arg_GenericParameter">
+            <summary>Method must be called on a Type for which Type.IsGenericParameter is false.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NoAccessSpec">
+            <summary>Must specify binding flags describing the invoke operation required (BindingFlags.InvokeMethod CreateInstance GetField SetField GetProperty SetProperty).</summary>
+        </member>
+        <member name="P:System.SR.Arg_NamedParamTooBig">
+            <summary>Named parameter array cannot be bigger than argument array.</summary>
+        </member>
+        <member name="P:System.SR.Arg_PropSetGet">
+            <summary>Cannot specify both Get and Set on a property.</summary>
+        </member>
+        <member name="P:System.SR.Arg_PropSetInvoke">
+            <summary>Cannot specify Set on a property and Invoke on a method.</summary>
+        </member>
+        <member name="P:System.SR.Arg_NamedParamNull">
+            <summary>Named parameter value must not be null.</summary>
+        </member>
+        <member name="P:System.SR.Arg_CreatInstAccess">
+            <summary>Cannot specify both CreateInstance and another access type.</summary>
+        </member>
+        <member name="P:System.SR.Arg_FldSetGet">
+            <summary>Cannot specify both Get and Set on a field.</summary>
+        </member>
+        <member name="P:System.SR.Arg_FldGetPropSet">
+            <summary>Cannot specify both GetField and SetProperty.</summary>
+        </member>
+        <member name="P:System.SR.Arg_FldSetPropGet">
+            <summary>Cannot specify both SetField and GetProperty.</summary>
+        </member>
+        <member name="P:System.SR.Arg_FldSetInvoke">
+            <summary>Cannot specify Set on a Field and Invoke on a method.</summary>
+        </member>
+        <member name="P:System.SR.Arg_IndexMustBeInt">
+            <summary>All indexes must be of type Int32.</summary>
+        </member>
+        <member name="P:System.SR.Arg_FldGetArgErr">
+            <summary>No arguments can be provided to Get a field value.</summary>
+        </member>
+        <member name="P:System.SR.Arg_FldSetArgErr">
+            <summary>Only the field value can be specified to set a field value.</summary>
+        </member>
+        <member name="P:System.SR.Arg_PlatformNotSupportedInvokeMemberCom">
+            <summary>InvokeMember on a COM object is not supported on this platform.</summary>
+        </member>
+        <member name="P:System.SR.Argument_MustBeRuntimeType">
+            <summary>Type must be a runtime Type object.</summary>
+        </member>
+        <member name="P:System.SR.Argument_MustBeRuntimeMethodInfo">
+            <summary>MethodInfo must be a runtime MethodInfo object.</summary>
+        </member>
+        <member name="P:System.SR.Arg_ArrayZeroError">
+            <summary>Array must not be of length zero.</summary>
+        </member>
+        <member name="P:System.SR.Argument_MustBeRuntimeFieldInfo">
+            <summary>FieldInfo must be a runtime FieldInfo object.</summary>
+        </member>
+        <member name="P:System.SR.Argument_TypedReferenceInvalidField">
+            <summary>Field in TypedReferences cannot be static.</summary>
+        </member>
+        <member name="P:System.SR.MissingMemberTypeRef">
+            <summary>FieldInfo does not match the target Type.</summary>
+        </member>
+        <member name="P:System.SR.Arg_TypeRefPrimitve">
+            <summary>TypedReferences cannot be redefined as primitives.</summary>
+        </member>
+        <member name="P:System.SR.MissingMemberNestErr">
+            <summary>TypedReference can only be made on nested value Types.</summary>
+        </member>
+        <member name="P:System.SR.Arg_TypedReference_Null">
+            <summary>The TypedReference must be initialized.</summary>
+        </member>
+        <member name="P:System.SR.Acc_CreateAbst">
+            <summary>Cannot create an abstract class.</summary>
+        </member>
+        <member name="P:System.SR.Acc_CreateInterface">
+            <summary>Cannot create an instance of an interface.</summary>
+        </member>
+        <member name="P:System.SR.CannotCreateByRefOfByRef">
+            <summary>Cannot create a byref of a byref: {0}</summary>
+        </member>
+        <member name="P:System.SR.CannotCreatePointerOfByRef">
+            <summary>Cannot create a pointer to a byref: {0}</summary>
+        </member>
+        <member name="P:System.SR.Arg_EnumLitValueNotFound">
+            <summary>Literal value was not found.</summary>
+        </member>
+        <member name="P:System.SR.NotSupported_ByRefLike">
+            <summary>Cannot create boxed ByRef-like values.</summary>
+        </member>
+        <member name="P:System.SR.CannotUseByRefLikeTypeInInstantiation">
+            <summary>Cannot instantiate a generic type on a byref-like type.</summary>
+        </member>
+        <member name="P:System.SR.RFLCT_Targ_StatMethReqTarg">
+            <summary>Non-static method requires a target.</summary>
+        </member>
+        <member name="P:System.SR.RFLCT_Targ_ITargMismatch">
+            <summary>Object does not match target type.</summary>
+        </member>
+        <member name="P:System.SR.InvalidOperation_NoValue">
+            <summary>Nullable object must have a value.</summary>
+        </member>
+        <member name="P:System.SR.Argument_ArrayGetInterfaceMap">
+            <summary>Interface maps for generic interfaces on arrays cannot be retrieved.</summary>
+        </member>
+        <member name="M:System.Collections.Generic.LowLevelListWithIList`1.System#Collections#Generic#IEnumerable{T}#GetEnumerator">
+            <internalonly/>
+        </member>
+        <member name="T:System.Collections.Generic.LowLevelDictionaryWithIEnumerable`2">
+            <summary>
+            LowLevelDictionary when enumeration is needed
+            </summary>
+        </member>
+        <member name="M:System.Collections.HashHelpers.GetFastModMultiplier(System.UInt32)">
+            <summary>Returns approximate reciprocal of the divisor: ceil(2**64 / divisor).</summary>
+            <remarks>This should only be used on 64-bit.</remarks>
+        </member>
+        <member name="M:System.Collections.HashHelpers.FastMod(System.UInt32,System.UInt32,System.UInt64)">
+            <summary>Performs a mod operation using the multiplier pre-computed with <see cref="M:System.Collections.HashHelpers.GetFastModMultiplier(System.UInt32)"/>.</summary>
+            <remarks>This should only be used on 64-bit.</remarks>
+        </member>
+        <member name="P:Internal.Reflection.Core.Execution.FieldAccessor.Offset">
+            <summary>
+            Returns the field offset (asserts and throws if not an instance field). Does not include the size of the object header.
+            </summary>
+        </member>
+    </members>
+</doc>

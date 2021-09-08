@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Private.Interop</name>
+    </assembly>
+    <members>
+        <member name="T:Internal.Runtime.CompilerHelpers.LibraryInitializer">
+            <summary>
+            Container class to run specific class constructors in a defined order. Since we can't
+            directly invoke class constructors in C#, they're renamed Initialize.
+            </summary>
+        </member>
+        <member name="F:Internal.Runtime.InteropDataConstants.HasMarshallers">
+            <summary>
+            Flag set in RuntimeInteropData if the entry is for type with marshallers
+            </summary>
+        </member>
+        <member name="F:Internal.Runtime.InteropDataConstants.HasInvalidLayout">
+            <summary>
+            Flag set in RuntimeInteropData if the entry is for type with invalid interop layout
+            </summary>
+        </member>
+        <member name="F:Internal.Runtime.InteropDataConstants.FieldCountShift">
+            <summary>
+            Shift used to encode field count
+            </summary>
+        </member>
+        <member name="F:Internal.Runtime.InteropDataConstants.HasDllImportSearchPath">
+            <summary>
+            Flag set in ModuleFixupCell if DllImportSearchPath is specified for the DllImport.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.MissingInteropDataException">
+            <summary>
+            Thrown when a manual marshalling method is called, but the type was not found
+            by static analysis or in the rd.xml file.
+            </summary>
+        </member>
+        <member name="P:System.SR.StructMarshalling_MissingInteropData">
+            <summary>{0} is missing structure marshalling data. To enable structure marshalling data, add a MarshalStructure directive to the application rd.xml file. For more information, please visit http://go.microsoft.com/fwlink/?LinkID=393965</summary>
+        </member>
+        <member name="P:System.SR.DelegateMarshalling_MissingInteropData">
+            <summary>{0} is missing delegate marshalling data. To enable delegate marshalling data, add a MarshalDelegate directive to the application rd.xml file. For more information, please visit http://go.microsoft.com/fwlink/?LinkID=393965</summary>
+        </member>
+        <member name="P:System.SR.Argument_OffsetOfFieldNotFound">
+            <summary>Field passed in is not a marshaled member of the type '{0}'.</summary>
+        </member>
+    </members>
+</doc>

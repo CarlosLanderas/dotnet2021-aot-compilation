@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Private.Reflection.Metadata</name>
+    </assembly>
+    <members>
+        <member name="F:Internal.Metadata.NativeFormat.AssemblyFlags.PublicKey">
+            The assembly reference holds the full (unhashed) public key.
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.AssemblyFlags.Retargetable">
+            The implementation of this assembly used at runtime is not expected to match the version seen at compile time.
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.AssemblyFlags.DisableJITcompileOptimizer">
+            Reserved.
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.AssemblyFlags.EnableJITcompileTracking">
+            Reserved.
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.FixedArgumentAttributes.Boxed">
+            Values should be boxed as Object
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.GenericParameterKind.GenericTypeParameter">
+            Represents a type parameter for a generic type.
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.GenericParameterKind.GenericMethodParameter">
+            Represents a type parameter from a generic method.
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.NamedArgumentMemberKind.Property">
+            Specifies the name of a property
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.NamedArgumentMemberKind.Field">
+            Specifies the name of a field
+        </member>
+        <member name="T:Internal.Metadata.NativeFormat.ConstantReferenceValue">
+            <summary>
+            ConstantReferenceValue can only be used to encapsulate null reference values,
+            and therefore does not actually store the value.
+            </summary>
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ConstantReferenceValue.Value">
+            Always returns null value.
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MetadataReader.ScopeDefinitions">
+            <summary>
+            Used as the root entrypoint for metadata, this is where all top-down
+            structural walks of metadata must start.
+            </summary>
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MetadataReader.NullHandle">
+            <summary>
+            Returns a Handle value representing the null value. Can be used
+            to test handle values of all types for null.
+            </summary>
+        </member>
+        <member name="M:Internal.Metadata.NativeFormat.MetadataReader.IsNull(Internal.Metadata.NativeFormat.Handle)">
+            <summary>
+            Returns true if handle is null.
+            </summary>
+        </member>
+        <member name="M:Internal.Metadata.NativeFormat.MetadataReader.ToHandle(Internal.Metadata.NativeFormat.Handle)">
+            <summary>
+            Idempotent - simply returns the provided handle value. Exists for
+            consistency so that generated code does not need to handle this
+            as a special case.
+            </summary>
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.MetadataHeader.Signature">
+            <todo>
+            Signature should be updated every time the metadata schema changes.
+            </todo>
+        </member>
+        <member name="F:Internal.Metadata.NativeFormat.MetadataHeader.ScopeDefinitions">
+            <summary>
+            The set of ScopeDefinitions contained within this metadata resource.
+            </summary>
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ArraySignature.ElementType">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ByReferenceSignature.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ConstantBoxedEnumValue.Value">
+            One of: ConstantByteValue, ConstantSByteValue, ConstantInt16Value, ConstantUInt16Value, ConstantInt32Value, ConstantUInt32Value, ConstantInt64Value, ConstantUInt64Value
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ConstantBoxedEnumValue.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ConstantStringArray.Value">
+            One of: ConstantStringValue, ConstantReferenceValue
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.CustomAttribute.Constructor">
+            One of: QualifiedMethod, MemberReference
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.Event.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.Field.DefaultValue">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ConstantBooleanArray, ConstantBooleanValue, ConstantByteArray, ConstantByteValue, ConstantCharArray, ConstantCharValue, ConstantDoubleArray, ConstantDoubleValue, ConstantEnumArray, ConstantHandleArray, ConstantInt16Array, ConstantInt16Value, ConstantInt32Array, ConstantInt32Value, ConstantInt64Array, ConstantInt64Value, ConstantReferenceValue, ConstantSByteArray, ConstantSByteValue, ConstantSingleArray, ConstantSingleValue, ConstantStringArray, ConstantStringValue, ConstantUInt16Array, ConstantUInt16Value, ConstantUInt32Array, ConstantUInt32Value, ConstantUInt64Array, ConstantUInt64Value
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.FieldSignature.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.FixedArgument.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.FixedArgument.Value">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ConstantBooleanArray, ConstantBooleanValue, ConstantByteArray, ConstantByteValue, ConstantCharArray, ConstantCharValue, ConstantDoubleArray, ConstantDoubleValue, ConstantEnumArray, ConstantHandleArray, ConstantInt16Array, ConstantInt16Value, ConstantInt32Array, ConstantInt32Value, ConstantInt64Array, ConstantInt64Value, ConstantReferenceValue, ConstantSByteArray, ConstantSByteValue, ConstantSingleArray, ConstantSingleValue, ConstantStringArray, ConstantStringValue, ConstantUInt16Array, ConstantUInt16Value, ConstantUInt32Array, ConstantUInt32Value, ConstantUInt64Array, ConstantUInt64Value
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.GenericParameter.Constraints">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MemberReference.Parent">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MemberReference.Signature">
+            One of: MethodSignature, FieldSignature
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodImpl.MethodBody">
+            One of: QualifiedMethod, MemberReference
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodImpl.MethodDeclaration">
+            One of: QualifiedMethod, MemberReference
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodInstantiation.Method">
+            One of: QualifiedMethod, MemberReference
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodInstantiation.GenericTypeArguments">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodSignature.ReturnType">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodSignature.Parameters">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.MethodSignature.VarArgParameters">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ModifiedType.ModifierType">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.ModifiedType.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.NamespaceDefinition.ParentScopeOrNamespace">
+            One of: NamespaceDefinition, ScopeDefinition
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.NamespaceReference.ParentScopeOrNamespace">
+            One of: NamespaceReference, ScopeReference
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.Parameter.DefaultValue">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ConstantBooleanArray, ConstantBooleanValue, ConstantByteArray, ConstantByteValue, ConstantCharArray, ConstantCharValue, ConstantDoubleArray, ConstantDoubleValue, ConstantEnumArray, ConstantHandleArray, ConstantInt16Array, ConstantInt16Value, ConstantInt32Array, ConstantInt32Value, ConstantInt64Array, ConstantInt64Value, ConstantReferenceValue, ConstantSByteArray, ConstantSByteValue, ConstantSingleArray, ConstantSingleValue, ConstantStringArray, ConstantStringValue, ConstantUInt16Array, ConstantUInt16Value, ConstantUInt32Array, ConstantUInt32Value, ConstantUInt64Array, ConstantUInt64Value
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.PointerSignature.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.Property.DefaultValue">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ConstantBooleanArray, ConstantBooleanValue, ConstantByteArray, ConstantByteValue, ConstantCharArray, ConstantCharValue, ConstantDoubleArray, ConstantDoubleValue, ConstantEnumArray, ConstantHandleArray, ConstantInt16Array, ConstantInt16Value, ConstantInt32Array, ConstantInt32Value, ConstantInt64Array, ConstantInt64Value, ConstantReferenceValue, ConstantSByteArray, ConstantSByteValue, ConstantSingleArray, ConstantSingleValue, ConstantStringArray, ConstantStringValue, ConstantUInt16Array, ConstantUInt16Value, ConstantUInt32Array, ConstantUInt32Value, ConstantUInt64Array, ConstantUInt64Value
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.PropertySignature.Type">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.PropertySignature.Parameters">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.SZArraySignature.ElementType">
+            One of: TypeDefinition, TypeReference, TypeSpecification, ModifiedType
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.TypeDefinition.BaseType">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.TypeDefinition.Interfaces">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.TypeInstantiationSignature.GenericType">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.TypeInstantiationSignature.GenericTypeArguments">
+            One of: TypeDefinition, TypeReference, TypeSpecification
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.TypeReference.ParentNamespaceOrType">
+            One of: NamespaceReference, TypeReference
+        </member>
+        <member name="P:Internal.Metadata.NativeFormat.TypeSpecification.Signature">
+            One of: TypeDefinition, TypeReference, TypeInstantiationSignature, SZArraySignature, ArraySignature, PointerSignature, FunctionPointerSignature, ByReferenceSignature, TypeVariableSignature, MethodTypeVariableSignature
+        </member>
+    </members>
+</doc>
